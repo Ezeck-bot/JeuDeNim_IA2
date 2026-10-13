@@ -170,9 +170,9 @@ Identifiant                        Points                Chemin
 =================================  ====================  ==================================
 ``qualité_du_code``                10                    README.rst#l92
 ``discussion``                     10 bonus              README.rst#l128
-``QValue``                         5                     src/nim/__init__.py#l80
-``transition``                     10                    src/nim/__init__.py#l122
-``available_actions``              10                    src/nim/__init__.py#l127
+``QValue``                         5                     src/nim/__init__.py#l80 GOOD
+``transition``                     10                    src/nim/__init__.py#l122 GOOD
+``available_actions``              10                    src/nim/__init__.py#l127 GOOD
 ``epsilon``                        5                     src/nim/ai.py#l28
 ``alpha``                          5                     src/nim/ai.py#l35
 ``gamma``                          2                     src/nim/ai.py#l56
@@ -180,7 +180,7 @@ Identifiant                        Points                Chemin
 ``update_q_value``                 10                    src/nim/ai.py#l131
 ``best_future_reward``             10                    src/nim/ai.py#l145
 ``choose_action``                  10                    src/nim/ai.py#l164
-``test_available_actions``         10                    test/test_available_actions.py#l19
+``test_available_actions``         10                    test/test_available_actions.py#l19 GOOD
 ``test_number_of_piles_provided``  3                     test/test_new_random_board.py#l21
 **Total cumulatif**                **100 (+ 10 bonus)**  **-**
 =================================  ====================  ==================================

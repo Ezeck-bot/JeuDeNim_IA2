@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import random
 from typing import Literal
 
-from nim import Action, Board, Probability, QValue
+from nim import Action, Board, Probability, QValue, available_actions
 
 type Algorithm = Literal["greedy", "epsilon-greedy"]
 
@@ -31,6 +32,7 @@ class QLearning:
                     le sens du paramètre et le choix de sa valeur.
             alpha:
                 Le facteur d'apprentissage.
+
 
                 TODO: alpha (5 points)
                     Identifier une valeur par défaut
@@ -93,6 +95,10 @@ class QLearning:
         """
         # TODO: get_q_value (10 points)
         #   Tester et implémenter get_q_value
+        state_tuple = tuple(state)
+        if (state_tuple, action) in self.q:
+            return self.q[(state_tuple, action)]
+        return 0
 
     def update_q_value(
         self,
@@ -130,7 +136,9 @@ class QLearning:
         """
         # TODO: update_q_value (10 points)
         #   Tester et implémenter update_q_value
-        raise NotImplementedError
+        self.q[(tuple(state), action)] = old_q + self.alpha * (
+            reward + self.gamma * future_rewards - old_q
+        )
 
     def best_future_reward(self, state: Board) -> QValue:
         """Estime la meilleure récompense future étant donné un état `state`.
@@ -144,7 +152,11 @@ class QLearning:
         """
         # TODO: best_future_reward (10 points)
         #   Tester et implémenter best_future_reward
-        raise NotImplementedError
+        actions = available_actions(state)
+        if not actions:
+            return 0
+
+        return max(self.get_q_value(state, action) for action in actions)
 
     def choose_action(self, state: Board, train: bool = True) -> Action:
         """Étant donné un état, retourne une action à entreprendre.
@@ -163,4 +175,13 @@ class QLearning:
         """
         # TODO: choose_action (10 points)
         #   Tester et implémenter choose_action
-        raise NotImplementedError
+        actions = available_actions(state)
+
+        if not actions:
+            raise ValueError("Aucune action disponible pour l'état donné.")
+
+        if train and random.random() < self.epsilon:
+            return random.choice(list(actions))
+
+        best_action = max(actions, key=lambda action: self.get_q_value(state, action))
+        return best_action
